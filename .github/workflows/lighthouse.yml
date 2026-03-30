@@ -23,7 +23,7 @@ jobs:
         run: pnpm exec lhci collect
       - name: Assert Lighthouse thresholds
         run: pnpm exec lhci assert
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: lighthouse-report
