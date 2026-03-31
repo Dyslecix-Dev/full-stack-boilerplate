@@ -48,23 +48,24 @@ pnpm dlx web-push generate-vapid-keys
 
 > **Why are there duplicate-looking variables?** When you create a Supabase project through the Vercel integration, Vercel automatically provisions all of these environment variables. Some are aliases for the same value under different naming conventions (e.g. `SUPABASE_ANON_KEY` and `SUPABASE_PUBLISHABLE_KEY` hold the same key; `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_SECRET_KEY` are likewise equivalent). If you're setting up manually, you only need the ones the app actually uses — the rest are provided for Vercel compatibility.
 
-| Variable                    | Description                                      | Build-validated? |
-| --------------------------- | ------------------------------------------------ | :--------------: |
-| `SUPABASE_ANON_KEY`         | Supabase anonymous key (server-side)             |        No        |
-| `SUPABASE_PUBLISHABLE_KEY`  | Supabase publishable key (server-side)           |        No        |
-| `SUPABASE_SECRET_KEY`       | Supabase secret key                              |        No        |
-| `SUPABASE_SERVICE_ROLE_KEY` | Service role key (bypasses RLS)                  |        No        |
-| `SUPABASE_JWT_SECRET`       | JWT verification secret                          |        No        |
-| `SUPABASE_URL`              | Supabase project URL (server-side)               |        No        |
-| `SUPABASE_ACCESS_TOKEN`     | Personal access token (Supabase MCP server only) |        No        |
+| Variable                    | Description                            | Build-validated? |
+| --------------------------- | -------------------------------------- | :--------------: |
+| `SUPABASE_ANON_KEY`         | Supabase anonymous key (server-side)   |        No        |
+| `SUPABASE_PUBLISHABLE_KEY`  | Supabase publishable key (server-side) |        No        |
+| `SUPABASE_SECRET_KEY`       | Supabase secret key                    |        No        |
+| `SUPABASE_SERVICE_ROLE_KEY` | Service role key (bypasses RLS)        |        No        |
+| `SUPABASE_JWT_SECRET`       | JWT verification secret                |        No        |
+| `SUPABASE_URL`              | Supabase project URL (server-side)     |        No        |
 
 ### Server-only (Integrations)
 
-| Variable                       | Description                         | Build-validated? |
-| ------------------------------ | ----------------------------------- | :--------------: |
-| `GITHUB_PERSONAL_ACCESS_TOKEN` | GitHub PAT (GitHub MCP server only) |        No        |
+| Variable                       | Description                             | Build-validated? |
+| ------------------------------ | --------------------------------------- | :--------------: |
+| `GITHUB_PERSONAL_ACCESS_TOKEN` | GitHub PAT (GitHub MCP server only)     |        No        |
+| `UPSTASH_EMAIL`                | Upstash account email (MCP server only) |        No        |
+| `UPSTASH_API_KEY`              | Upstash API key (MCP server only)       |        No        |
 
-> **Note**: `SUPABASE_ACCESS_TOKEN` and `GITHUB_PERSONAL_ACCESS_TOKEN` are optional — only required if you use the corresponding MCP servers. Leave them blank or omit them otherwise.
+> **Note**: These integration variables are optional — only required if you use the corresponding MCP servers. Leave them blank or omit otherwise.
 
 ### Server-only (Database)
 
@@ -80,9 +81,10 @@ pnpm dlx web-push generate-vapid-keys
 
 ### Server-only (Email)
 
-| Variable         | Description                      | Build-validated? |
-| ---------------- | -------------------------------- | :--------------: |
-| `RESEND_API_KEY` | Resend API key for sending email |     Optional     |
+| Variable         | Description                                 | Build-validated? |
+| ---------------- | ------------------------------------------- | :--------------: |
+| `RESEND_API_KEY` | Resend API key for sending email            |     Optional     |
+| `EMAIL_FROM`     | Default sender address (e.g. `you@app.com`) |        No        |
 
 ### Server-only (Push)
 
@@ -92,12 +94,12 @@ pnpm dlx web-push generate-vapid-keys
 
 ### Server-only (Rate Limiting)
 
-| Variable                   | Description                                | Build-validated? |
-| -------------------------- | ------------------------------------------ | :--------------: |
-| `UPSTASH_REDIS_REST_URL`   | Upstash Redis URL                          |        No        |
-| `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis token                        |        No        |
-| `AUTH_RATE_LIMIT`          | Max auth requests per window (default: 10) |        No        |
-| `AUTH_RATE_WINDOW_MS`      | Rate limit window in ms (default: 60000)   |        No        |
+| Variable              | Description                                | Build-validated? |
+| --------------------- | ------------------------------------------ | :--------------: |
+| `KV_REST_API_URL`     | Upstash Redis URL                          |        No        |
+| `KV_REST_API_TOKEN`   | Upstash Redis token                        |        No        |
+| `AUTH_RATE_LIMIT`     | Max auth requests per window (default: 10) |        No        |
+| `AUTH_RATE_WINDOW_MS` | Rate limit window in ms (default: 60000)   |        No        |
 
 > Falls back to in-memory rate limiting when not set (fine for local development).
 
@@ -131,7 +133,7 @@ const envSchema = z.object({
   VAPID_MAILTO: z.string().startsWith("mailto:").optional(),
 });
 
-if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "production") {
+if (!process.env.CI && (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "production")) {
   const parsed = envSchema.safeParse(process.env);
   if (!parsed.success) {
     // NOTE: prints each invalid field and exits
@@ -170,7 +172,7 @@ Note: Setting `NODE_ENV` in `.env.local` does not work — Next.js overrides it 
 
 ### "Invalid or missing environment variables" on `pnpm dev`
 
-The Zod schema in `next.config.ts` validates 7 variables at startup. If you only want to explore the UI without setting up external services, run:
+The Zod schema in `next.config.ts` validates environment variables at startup. If you only want to explore the UI without setting up external services, run:
 
 ```bash
 NODE_ENV=test pnpm dev

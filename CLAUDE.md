@@ -90,8 +90,10 @@ Configured in `.mcp.json`. Available during AI-assisted development:
 - **inkeepMcp** — Search Zod v4 docs (`mcp.inkeep.com/zod`)
 - **next-devtools** — Next.js dev tools (docs, browser eval, upgrade)
 - **resend** — Manage Resend resources (emails, contacts, domains, broadcasts)
+- **Sentry** — Sentry error tracking integration (`mcp.sentry.dev`)
 - **shadcn** — Browse and add shadcn/ui components
 - **supabase** — Manage Supabase project (tables, auth, edge functions, logs)
+- **upstash** — Manage Upstash Redis databases (requires `UPSTASH_EMAIL`, `UPSTASH_API_KEY`)
 - **vercel** — Manage Vercel deployments and project settings
 - **vitest** — Run and analyze Vitest tests
 
@@ -145,14 +147,14 @@ Configured in `.mcp.json`. Available during AI-assisted development:
 
 ### Storage
 
-- Use `uploadFile()` / `deleteFile()` / `getPublicUrl()` from `@/lib/storage`
+- Use `uploadFile()` / `deleteFile()` / `getPublicUrl()` / `getSignedUrl()` from `@/lib/storage`
 - File uploads go through the `uploadFileAction` server action in `@/lib/storage/actions`
 - Create an `uploads` bucket in Supabase Storage dashboard before using
 
 ### Rate Limiting
 
 - Uses Upstash Redis in production (`@upstash/ratelimit`), in-memory fallback in dev
-- Set `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` for production
+- Set `KV_REST_API_URL` and `KV_REST_API_TOKEN` for production
 
 ### Error Tracking
 

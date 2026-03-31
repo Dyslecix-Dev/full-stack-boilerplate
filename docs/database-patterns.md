@@ -54,7 +54,7 @@ export const db = drizzle({ client, schema });
 `drizzle.config.ts` uses `POSTGRES_URL_NON_POOLING` for migrations (direct connection, not pooled). The runtime `lib/db/index.ts` uses `POSTGRES_URL` (pooled connection).
 
 - **Migrations output**: `./drizzle/` directory
-- **Schema source**: `./lib/db/schema`
+- **Schema source**: `./lib/db/schema/!(*test*).ts` — test files in the schema directory are excluded from migration generation
 
 ## Commands
 

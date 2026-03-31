@@ -113,7 +113,7 @@ SW (app/sw.ts)                                          push event
    VAPID_PRIVATE_KEY=your_private_key
    ```
 
-3. **Set `VAPID_MAILTO`** in your `.env` to your app's contact email (e.g. `mailto:you@example.com`). Falls back to `mailto:hello@example.com` if not set.
+3. **Set `VAPID_MAILTO`** in your `.env` to your app's contact email (e.g. `mailto:you@example.com`). Push notifications will throw if this is not set.
 
 4. **Run the migration** to create the `push_subscriptions` table:
 
@@ -346,7 +346,7 @@ Edit the `appCaching` array in `app/sw.ts` to add or modify runtime caching rule
 ### Update push notification defaults
 
 - Default icon/badge paths: `app/sw.ts` (push event handler)
-- VAPID mailto address: `VAPID_MAILTO` env var (falls back to `mailto:hello@example.com`)
+- VAPID mailto address: `VAPID_MAILTO` env var (required — throws if not set when push is used)
 - "Left in progress" reminder delay: `app/sw.ts` (message event handler)
 
 ## Apple Splash Screens

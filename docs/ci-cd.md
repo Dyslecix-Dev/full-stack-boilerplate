@@ -25,13 +25,13 @@ Runs Playwright browser tests.
 Runs performance, accessibility, best-practices, and SEO audits.
 
 - **Timeout**: 15 minutes
-- **Steps**: Install, build production site, collect reports (3 runs), assert thresholds, upload
+- **Steps**: Install, build production site, collect reports (1 run), assert thresholds, upload
 - **Artifacts**: `.lighthouseci/` uploaded (30-day retention)
-- **Thresholds** (from `lighthouserc.cjs`):
-  - Performance: warn if < 90%
+- **Thresholds** (from `.lighthouserc.json`):
+  - Performance: **error** if < 80%
   - Accessibility: **error** if < 90%
-  - Best Practices: warn if < 90%
-  - SEO: warn if < 90%
+  - Best Practices: **error** if < 80%
+  - SEO: **error** if < 80%
 
 ## Shared Configuration
 
@@ -74,7 +74,7 @@ jobs:
 
 ## Deployment
 
-The project is configured for Vercel deployment (uses `VERCEL_URL` env var for metadata). Deploy by connecting your GitHub repo to Vercel, or use the deploy button in the app.
+The project is configured for Vercel deployment (uses `VERCEL_PROJECT_PRODUCTION_URL` env var for metadata). Deploy by connecting your GitHub repo to Vercel, or use the deploy button in the app.
 
 For other platforms, run:
 

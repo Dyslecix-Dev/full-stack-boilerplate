@@ -10,7 +10,7 @@
 | Playwright             | E2E                  | `playwright.config.ts` | `pnpm test:e2e`   |
 | @axe-core/playwright   | Accessibility (E2E)  | `playwright.config.ts` | `pnpm test:e2e`   |
 | Playwright Screenshots | Visual regression    | `playwright.config.ts` | `pnpm test:e2e`   |
-| Lighthouse             | Performance          | `lighthouserc.cjs`     | `pnpm lighthouse` |
+| Lighthouse             | Performance          | `.lighthouserc.json`   | `pnpm lighthouse` |
 
 ## Unit Tests (Vitest)
 
@@ -183,15 +183,15 @@ pnpm exec playwright install --with-deps
 
 ## Performance (Lighthouse CI)
 
-### Configuration (`lighthouserc.cjs`)
+### Configuration (`.lighthouserc.json`)
 
-- **Preset**: Desktop
-- **Runs**: 3 per URL
+- **Preset**: `lighthouse:recommended`
+- **Runs**: 1 per URL
 - **Thresholds**:
-  - Performance: warn < 0.9
+  - Performance: **error** < 0.8
   - Accessibility: **error** < 0.9
-  - Best Practices: warn < 0.9
-  - SEO: warn < 0.9
+  - Best Practices: **error** < 0.8
+  - SEO: **error** < 0.8
 
 ### Running
 

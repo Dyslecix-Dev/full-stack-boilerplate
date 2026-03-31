@@ -105,7 +105,7 @@ Before going live, verify:
 - [ ] `NEXT_PUBLIC_APP_URL` is set to your production domain
 - [ ] `VAPID_MAILTO` is set to a real contact email
 - [ ] `NEXT_PUBLIC_SENTRY_DSN` is set for error tracking
-- [ ] `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are set for production rate limiting
+- [ ] `KV_REST_API_URL` and `KV_REST_API_TOKEN` are set for production rate limiting
 
 ### Supabase
 

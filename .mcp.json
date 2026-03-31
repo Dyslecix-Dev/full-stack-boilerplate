@@ -36,10 +36,7 @@
     },
     "supabase": {
       "type": "http",
-      "url": "https://mcp.supabase.com/mcp",
-      "headers": {
-        "Authorization": "Bearer ${SUPABASE_ACCESS_TOKEN}"
-      }
+      "url": "http://localhost:54321/mcp"
     },
     "vercel": {
       "type": "http",

@@ -10,11 +10,14 @@ function ensureVapid() {
   if (vapidInitialised) return;
   const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   const privateKey = process.env.VAPID_PRIVATE_KEY;
+  const mailto = process.env.VAPID_MAILTO;
   if (!publicKey || !privateKey) {
     throw new Error("VAPID keys are not configured. Set NEXT_PUBLIC_VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY in your .env to enable push notifications.");
   }
-  // TODO: set VAPID_MAILTO in your .env to your app's contact email (e.g. mailto:you@example.com)
-  webpush.setVapidDetails(process.env.VAPID_MAILTO ?? "mailto:hello@example.com", publicKey, privateKey);
+  if (!mailto) {
+    throw new Error("VAPID_MAILTO is not configured. Set VAPID_MAILTO in your .env to your app's contact email (e.g. mailto:you@example.com).");
+  }
+  webpush.setVapidDetails(mailto, publicKey, privateKey);
   vapidInitialised = true;
 }
 

@@ -64,10 +64,10 @@ The proxy in `proxy.ts` runs on every request (except static files/images). It:
 
 ```ts
 // Matches all routes EXCEPT static files and images
-"/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)";
+"/((?!_next/static|_next/image|serwist|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)";
 ```
 
-> **Note:** `favicon.ico` must be placed in the `app/` folder (not `public/`) so Next.js serves it as a route and the proxy matcher can correctly exclude it.
+> **Note:** `serwist` is excluded so the service worker route bypasses the proxy. `favicon.ico` must be placed in the `app/` folder (not `public/`) so Next.js serves it as a route and the proxy matcher can correctly exclude it.
 
 ```ts
 

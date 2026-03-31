@@ -4,7 +4,27 @@ A checklist of everything to update before shipping this full-stack boilerplate 
 
 ---
 
-## 1. Environment & Services
+## 1. Repository Setup
+
+- [ ] Remove the boilerplate git history and start fresh:
+
+  ```bash
+  rm -rf .git
+  git init
+  git add .
+  git commit -m "Initial commit"
+  ```
+
+- [ ] Point the remote to your new repository:
+
+  ```bash
+  git remote add origin git@github.com:your-org/your-app.git
+  git push -u origin main
+  ```
+
+---
+
+## 2. Environment & Services
 
 See [docs/environment.md](docs/environment.md) for full details on every variable.
 
@@ -20,13 +40,13 @@ See [docs/environment.md](docs/environment.md) for full details on every variabl
 - [ ] Create a [Resend](https://resend.com) account, generate an API key, and add `RESEND_API_KEY` to `.env` (`API Keys`)
 - [ ] Verify your sending domain in the Resend dashboard (`Domains`)
 - [ ] Add Resend DNS records to your domain provider
-- [ ] Set `VAPID_MAILTO` in `.env` to your app's contact email (e.g. `mailto:hello@example.com`) — required for push notification delivery
+- [ ] Set `VAPID_MAILTO` in `.env` to your app's contact email (e.g. `mailto:you@example.com`) — required for push notification delivery
 - [ ] Set `NEXT_PUBLIC_SENTRY_DSN` in `.env` to your [Sentry](https://sentry.io) project DSN (optional — error tracking is disabled when unset)
-- [ ] Set `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` in `.env` for production rate limiting (optional — falls back to in-memory in dev)
+- [ ] Set `KV_REST_API_URL` and `KV_REST_API_TOKEN` in `.env` for production rate limiting (optional — falls back to in-memory in dev)
 
 ---
 
-## 2. App Identity & Branding
+## 3. App Identity & Branding
 
 - [ ] **[`lib/config.ts`](lib/config.ts)** — update `name` and `description` in `siteConfig` (propagates to layout, manifest, OG image, sitemap, robots, hero, nav, and JSON-LD automatically)
 - [ ] **[`app/globals.css`](app/globals.css)** — update theme colors (`--primary`, `--background`, etc.) to match your brand (use [Color Hunt](https://colorhunt.co/) for palette inspiration)
@@ -45,7 +65,7 @@ See [docs/environment.md](docs/environment.md) for full details on every variabl
 
 ---
 
-## 3. Email Templates
+## 4. Email Templates
 
 See [docs/email.md](docs/email.md) for full details.
 
@@ -54,7 +74,7 @@ See [docs/email.md](docs/email.md) for full details.
 
 ---
 
-## 4. Database & Storage
+## 5. Database & Storage
 
 See [docs/database-patterns.md](docs/database-patterns.md) for full details.
 
@@ -66,7 +86,7 @@ See [docs/database-patterns.md](docs/database-patterns.md) for full details.
 
 ---
 
-## 5. Auth & Route Protection
+## 6. Auth & Route Protection
 
 See [docs/auth-patterns.md](docs/auth-patterns.md) for full details.
 
@@ -93,7 +113,7 @@ See [docs/auth-patterns.md](docs/auth-patterns.md) for full details.
 
 ---
 
-## 6. Service Worker & Caching
+## 7. Service Worker & Caching
 
 See [docs/pwa.md](docs/pwa.md) for full details.
 
@@ -103,7 +123,7 @@ See [docs/pwa.md](docs/pwa.md) for full details.
 
 ---
 
-## 7. Demo & Boilerplate Content
+## 8. Demo & Boilerplate Content
 
 - [ ] **[`app/protected/page.tsx`](app/protected/page.tsx)** — replace the demo content with your actual protected page
 - [ ] **[`app/protected/layout.tsx`](app/protected/layout.tsx)** — remove `<DeployButton />` (boilerplate helper only) and replace the placeholder nav with your app's navigation
@@ -128,7 +148,7 @@ See [docs/pwa.md](docs/pwa.md) for full details.
 
 ---
 
-## 8. CI/CD
+## 9. CI/CD
 
 See [docs/ci-cd.md](docs/ci-cd.md) for full details.
 
@@ -141,7 +161,7 @@ See [docs/ci-cd.md](docs/ci-cd.md) for full details.
 
 ---
 
-## 9. SEO & Metadata
+## 10. SEO & Metadata
 
 - [ ] **[`app/sitemap.ts`](app/sitemap.ts)** — add your app's public routes (dynamic routes can be fetched from the database)
 - [ ] **[`app/robots.ts`](app/robots.ts)** — update disallow rules to match your app's private routes
@@ -149,15 +169,15 @@ See [docs/ci-cd.md](docs/ci-cd.md) for full details.
 
 ---
 
-## 10. Security & Infrastructure
+## 11. Security & Infrastructure
 
 - [ ] **[`next.config.ts`](next.config.ts)** — update the Content-Security-Policy if you add external scripts, fonts, or APIs (and remove Vercel Analytics / Sentry domains if you remove those services)
 - [ ] **[`next.config.ts`](next.config.ts)** — review security headers (`X-Frame-Options`, `Referrer-Policy`, etc.) and adjust if your app needs to be embedded in iframes or has different referrer requirements
-- [ ] **[`lib/push/index.ts`](lib/push/index.ts)** — remove or update the hardcoded `mailto:hello@example.com` VAPID fallback (relies on `VAPID_MAILTO` env var being set)
+- [x] **[`lib/push/index.ts`](lib/push/index.ts)** — now throws if `VAPID_MAILTO` is not set (hardcoded fallback removed)
 
 ---
 
-## 11. Service Worker & Misc
+## 12. Service Worker & Misc
 
 - [ ] **[`app/sw.ts`](app/sw.ts)** — adjust the default background sync delay (ms) to match your app's UX expectations
 - [ ] **[`lib/push/index.ts`](lib/push/index.ts)** — set `VAPID_MAILTO` in `.env` to your app's contact email
@@ -204,4 +224,4 @@ If you don't need certain features, here's what to clean up:
 
 - Delete `lib/rate-limit.ts`
 - Remove `@upstash/ratelimit` and `@upstash/redis` from `package.json`
-- Remove `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` from `.env`
+- Remove `KV_REST_API_URL` and `KV_REST_API_TOKEN` from `.env`

@@ -2,7 +2,7 @@
 
 // NOTE: in production, uses `@upstash/ratelimit` with a sliding-window algorithm backed by Upstash Redis — works correctly across serverless instances.
 
-// NOTE: in development (or when UPSTASH_REDIS_REST_URL is not set), falls back to a simple in-memory sliding-window limiter that resets on server restart.
+// NOTE: in development (or when KV_REST_API_URL is not set), falls back to a simple in-memory sliding-window limiter that resets on server restart.
 
 // Usage:
 // ```ts
@@ -78,7 +78,7 @@ function createUpstashLimiter({ limit, windowMs }: RateLimiterOptions) {
 }
 
 export function createRateLimiter(options: RateLimiterOptions) {
-  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
     return createUpstashLimiter(options);
   }
   return createInMemoryLimiter(options);
