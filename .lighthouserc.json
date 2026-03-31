@@ -3,6 +3,8 @@
     "collect": {
       "url": ["http://localhost:3000"],
       "numberOfRuns": 1,
+      "startServerCommand": "pnpm start",
+      "startServerReadyPattern": "Ready in",
       "settings": {
         "preset": "desktop",
         "skipAudits": ["unsized-images"]
