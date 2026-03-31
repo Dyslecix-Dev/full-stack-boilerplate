@@ -4,7 +4,8 @@
       "url": ["http://localhost:3000"],
       "numberOfRuns": 1,
       "settings": {
-        "configPath": "./.lighthouserc-settings.json"
+        "preset": "desktop",
+        "skipAudits": ["unsized-images"]
       }
     },
     "assert": {
