@@ -34,4 +34,5 @@ jobs:
           name: visual-regression-diffs
           path: test-results/**/*-diff.png
           retention-days: 30
+          if-no-files-found: ignore
 
