@@ -38,13 +38,26 @@ An opinionated full-stack Next.js boilerplate for building modern web applicatio
    cd my-new-project
    ```
 
-2. **Install dependencies**
+2. **Reset git history and point to your own repository**
+
+   Remove the boilerplate's commit history and push a clean initial commit to a new GitHub repo:
+
+   ```bash
+   rm -rf .git
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin https://github.com/your-org/your-app.git
+   git push -u origin main
+   ```
+
+3. **Install dependencies**
 
    ```bash
    pnpm install
    ```
 
-3. **Set up environment variables**
+4. **Set up environment variables**
 
    ```bash
    cp .env.example .env
@@ -56,7 +69,7 @@ An opinionated full-stack Next.js boilerplate for building modern web applicatio
    >
    > **Using the Vercel × Supabase integration?** All env vars are populated automatically when you create a Supabase project through Vercel. The `.env.example` file includes every variable Vercel provides — some are aliases for the same value (see [docs/environment.md](docs/environment.md) for details).
 
-4. **Configure Supabase Auth**
+5. **Configure Supabase Auth**
 
    In your [Supabase dashboard](https://supabase.com/dashboard) under **Authentication → URL Configuration**:
    - Set **Site URL** to `http://localhost:3000`
@@ -64,13 +77,13 @@ An opinionated full-stack Next.js boilerplate for building modern web applicatio
 
    For production, add your deployed domain to both fields as well.
 
-5. **Set up the database**
+6. **Set up the database**
 
    ```bash
    pnpm db:push       # Push schema to your Supabase database
    ```
 
-6. **Start the dev server**
+7. **Start the dev server**
 
    ```bash
    pnpm dev

@@ -18,7 +18,7 @@ A checklist of everything to update before shipping this full-stack boilerplate 
 - [ ] Point the remote to your new repository:
 
   ```bash
-  git remote add origin git@github.com:your-org/your-app.git
+  git remote add origin https://github.com/your-org/your-app.git
   git push -u origin main
   ```
 
